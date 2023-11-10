@@ -13,7 +13,7 @@ class Sandbox(MQTTModule):
         # self.topic_map = {"avr/autonomous": self.on_autonomous_message}
         # self.autonomous_code()
 
-    def on_autonomous_message(self, payload: AvrAutonomousPayload) -> None:
+    def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
         self.enabled = payload["enable"]
 
     def autonomous_code(self) -> None:
