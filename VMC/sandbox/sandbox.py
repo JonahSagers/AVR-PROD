@@ -2,8 +2,7 @@ import time
 import math
 
 from bell.avr.mqtt.client import MQTTModule
-from bell.avr.mqtt.payloads import AvrAutonomousPayload
-from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload, AvrPcmSetServoAbsPayload
+from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload, AvrPcmSetServoAbsPayload, AvrAutonomousEnablePayload
 from loguru import logger
 # i hate the minions
 class Sandbox(MQTTModule):
