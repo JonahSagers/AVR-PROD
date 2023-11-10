@@ -9,9 +9,9 @@ class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Class initialized")
-        # self.enabled = False
-        # self.topic_map = {"avr/autonomous": self.on_autonomous_message}
-        # self.autonomous_code()
+        self.enabled = False
+        self.topic_map = {"avr/autonomous": self.on_autonomous_message}
+        self.autonomous_code()
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
         self.enabled = payload["enable"]
