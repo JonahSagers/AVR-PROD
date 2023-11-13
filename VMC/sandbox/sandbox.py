@@ -16,8 +16,9 @@ class Sandbox(MQTTModule):
         logger.debug("Sandbox Finished Initializing Yay!")
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
-        self.enabled = payload["enable"]
         logger.debug("Autonomous Message Recieved Yay!")
+        self.enabled = payload["enabled"]
+        logger.debug("Autonomous Message Processed Yay!")
         # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
         logger.debug("Setting Color To White")
 
