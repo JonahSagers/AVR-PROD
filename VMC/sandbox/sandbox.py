@@ -4,13 +4,13 @@ import math
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload, AvrPcmSetServoAbsPayload, AvrAutonomousEnablePayload
 from loguru import logger
-# i hate the minions
+
 class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Class initialized")
         self.enabled = False
-        self.topic_map = {"avr/autonomous": self.on_autonomous_message}
+        self.topic_map = {"avr/autonomous/enable": self.on_autonomous_message}
         self.autonomous_code()
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
