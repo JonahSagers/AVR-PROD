@@ -8,16 +8,18 @@ from loguru import logger
 class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
-        logger.debug("Class initialized")
         logger.debug("Sandbox Initialized Yay!")
         self.enabled = False
+        #code hangs here
         self.topic_map = {"avr/autonomous/enable": self.on_autonomous_message}
-        self.autonomous_code()
+        # self.autonomous_code()
         logger.debug("Sandbox Finished Initializing Yay!")
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
         self.enabled = payload["enable"]
         logger.debug("Autonomous Message Recieved Yay!")
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
+        logger.debug("Setting Color To White")
 
     def autonomous_code(self) -> None:
         while True:
