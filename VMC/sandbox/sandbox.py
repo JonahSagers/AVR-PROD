@@ -18,21 +18,21 @@ class Sandbox(MQTTModule):
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
         self.enabled = payload["enable"]
         logger.debug("Autonomous Message Recieved Yay!")
-        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
+        # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
         logger.debug("Setting Color To White")
 
     def autonomous_code(self) -> None:
         while True:
             if self.enabled:
-                box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
+                # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
                 logger.debug("Setting Color To White")
             time.sleep(1)
 
-if __name__ == "__main__":
-    box = Sandbox()
-    box.run_non_blocking()
-    logger.debug("Sandbox Started Yay!")
-    box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
+# if __name__ == "__main__":
+#     box = Sandbox()
+#     box.run_non_blocking()
+#     logger.debug("Sandbox Started Yay!")
+#     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
     # placeholder = 0
     # intensity = 0.1
     # while True:
