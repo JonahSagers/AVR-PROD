@@ -9,12 +9,15 @@ class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Class initialized")
+        print("Sandbox Initialized Yay!")
         self.enabled = False
         self.topic_map = {"avr/autonomous/enable": self.on_autonomous_message}
         self.autonomous_code()
+        print("Sandbox Finished Initializing Yay!")
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
         self.enabled = payload["enable"]
+        print("Autonomous Message Recieved Yay!")
 
     def autonomous_code(self) -> None:
         while True:
@@ -26,6 +29,7 @@ class Sandbox(MQTTModule):
 if __name__ == "__main__":
     box = Sandbox()
     box.run_non_blocking()
+    print("Sandbox Started Yay!")
     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
     # placeholder = 0
     # intensity = 0.1
