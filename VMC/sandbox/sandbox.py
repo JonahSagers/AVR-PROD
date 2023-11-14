@@ -19,7 +19,7 @@ class Sandbox(MQTTModule):
         logger.debug("Autonomous Message Recieved Yay!")
         self.enabled = payload["enabled"]
         logger.debug("Autonomous Message Processed Yay!")
-        # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
         logger.debug("Setting Color To White")
 
     def loop(self) -> None:
