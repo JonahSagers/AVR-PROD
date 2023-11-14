@@ -12,7 +12,6 @@ class Sandbox(MQTTModule):
         self.enabled = False
         #code hangs here
         self.topic_map = {"avr/autonomous/enable": self.on_autonomous_message}
-        # self.autonomous_code()
         logger.debug("Sandbox Finished Initializing Yay!")
 
     def on_autonomous_message(self, payload: AvrAutonomousEnablePayload) -> None:
@@ -22,14 +21,26 @@ class Sandbox(MQTTModule):
         # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
         logger.debug("Setting Color To White")
 
-    def autonomous_code(self) -> None:
+    def loop(self) -> None:
         while True:
+            #this will probably spam the logs, remove once you test it
+            logger.debug("Loop is running!")
             if self.enabled:
                 # box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
                 logger.debug("Setting Color To White")
             time.sleep(1)
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    box = Sandbox()
+
+    # Create a new thread for running the loop function independently of the main program
+    loop_thread = Thread(target=box.loop)
+    loop_thread.setDaemon(
+        True
+    )  # Setting the thread as a Daemon so it will end when the main program ends
+    loop_thread.start()  # Starting the new thread
+
+    box.run() 
 #     box = Sandbox()
 #     box.run_non_blocking()
 #     logger.debug("Sandbox Started Yay!")
