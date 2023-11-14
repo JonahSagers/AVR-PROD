@@ -22,6 +22,7 @@ class Sandbox(MQTTModule):
 
     def loop(self) -> None:
         autonTriggered = False
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
         while True:
             #this will probably spam the logs, remove once you test it
             if self.enabled:
