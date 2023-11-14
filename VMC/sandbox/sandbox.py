@@ -19,6 +19,10 @@ class Sandbox(MQTTModule):
         logger.debug("Autonomous Message Recieved Yay!")
         self.enabled = payload["enabled"]
         logger.debug("Autonomous Message Processed Yay!")
+        if self.enabled:
+            box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 0.5}})
+            time.sleep(3)
+            box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
 
     def loop(self) -> None:
         while True:
