@@ -24,21 +24,21 @@ class Sandbox(MQTTModule):
         autonTriggered = False
         while True:
             #this will probably spam the logs, remove once you test it
-            logger.debug("Loop is running!")
             if self.enabled:
-                box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 0, 255]})
-                logger.debug("Autonomous Enabled")
                 if autonTriggered == False:
+                    box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 0, 255]})
+                    logger.debug("Autonomous Enabled")
                     autonTriggered = True
                     box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 0.5}})
                     logger.debug("Blasting Off")
-                    time.sleep(3)
+                    time.sleep(10)
                     box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
                     logger.debug("Landing")
             else:
-                autonTriggered = False
-                box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
-            time.sleep(0.25)
+                if autonTriggered == True:
+                    autonTriggered = False
+                    box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
+            time.sleep(0.5)
 
 if __name__ == "__main__":
     box = Sandbox()
