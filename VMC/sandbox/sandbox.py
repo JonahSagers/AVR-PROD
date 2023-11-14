@@ -29,6 +29,8 @@ class Sandbox(MQTTModule):
                 if autonTriggered == False:
                     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 0, 255]})
                     logger.debug("Autonomous Enabled")
+                    box.send_message("avr/fcm/capture_home", {})
+                    time.sleep(0.5)
                     autonTriggered = True
                     box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 1}})
                     logger.debug("Blasting Off")
