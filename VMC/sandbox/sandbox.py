@@ -19,21 +19,26 @@ class Sandbox(MQTTModule):
         logger.debug("Autonomous Message Recieved Yay!")
         self.enabled = payload["enabled"]
         logger.debug("Autonomous Message Processed Yay!")
-        if self.enabled:
-            box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 0.5}})
-            time.sleep(3)
-            box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
 
     def loop(self) -> None:
+        autonTriggered = false
         while True:
             #this will probably spam the logs, remove once you test it
             logger.debug("Loop is running!")
             if self.enabled:
                 box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 0, 255]})
                 logger.debug("Autonomous Enabled")
+                if autonTriggered == false:
+                    autonTriggered = true
+                    box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 0.5}})
+                    logger.debug("Blasting Off")
+                    time.sleep(3)
+                    box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
+                    logger.debug("Landing")
             else:
+                autonTriggered = false
                 box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
-            time.sleep(1)
+            time.sleep(0.25)
 
 if __name__ == "__main__":
     box = Sandbox()
