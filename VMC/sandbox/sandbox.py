@@ -32,7 +32,9 @@ class Sandbox(MQTTModule):
                     autonTriggered = True
                     box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 1}})
                     logger.debug("Blasting Off")
-                    time.sleep(12)
+                    time.sleep(5)
+                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 0.5, "e": 0, "d": -1, "heading": 0}})
+                    time.sleep(7)
                     box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
                     logger.debug("Landing")
             else:
