@@ -34,7 +34,7 @@ class Sandbox(MQTTModule):
                     logger.debug("Blasting Off")
                     time.sleep(10)
                     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
-                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 1, "e": 0, "d": -1, "heading": 0}})
+                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 3, "e": 0, "d": -2, "heading": 0}})
                     time.sleep(10)
                     box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
                     logger.debug("Landing")
