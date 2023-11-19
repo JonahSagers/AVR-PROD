@@ -24,18 +24,20 @@ class Sandbox(MQTTModule):
         autonTriggered = False
         box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
         while True:
-            #this will probably spam the logs, remove once you test it
             if self.enabled:
                 if autonTriggered == False:
                     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 0, 255]})
                     logger.debug("Autonomous Enabled")
                     autonTriggered = True
-                    box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 2}})
+                    box.send_message("avr/fcm/actions", {"action": "takeoff", "payload": {"alt": 4}})
                     logger.debug("Blasting Off")
-                    time.sleep(10)
+                    time.sleep(5)
+                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 5.6896, "e": -1.778, "d": -4, "heading": 0}})
+                    time.sleep(5)
                     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 0]})
-                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 3, "e": 0, "d": -2, "heading": 0}})
-                    time.sleep(10)
+                    time.sleep(5)
+                    box.send_message("avr/fcm/actions", {"action": "goto_location_ned", "payload": {"n": 1.289558, "e": -1.143, "d": -4, "heading": 0}})
+                    time.sleep(7)
                     box.send_message("avr/fcm/actions", {"action": "land", "payload": {}})
                     logger.debug("Landing")
             else:
@@ -54,21 +56,4 @@ if __name__ == "__main__":
     )  # Setting the thread as a Daemon so it will end when the main program ends
     loop_thread.start()  # Starting the new thread
 
-    box.run() 
-#     box = Sandbox()
-#     box.run_non_blocking()
-#     logger.debug("Sandbox Started Yay!")
-#     box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
-    # placeholder = 0
-    # intensity = 0.1
-    # while True:
-    #     placeholder += 0.08
-    #     saturationW = (50 + (math.sin(placeholder) * 50)) * intensity
-    #     saturationR = (50 + (math.sin(placeholder + 1.57) * 50)) * intensity
-    #     saturationG = (50 + (math.sin(placeholder + 3.14) * 50)) * intensity
-    #     saturationB = (50 + (math.sin(placeholder + 4.71) * 50)) * intensity
-    #     box.send_message("avr/pcm/set_base_color", {"wrgb": [int(saturationW), int(saturationR), int(saturationG), int(saturationB)]})
-    #     #box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturationR * 7.5 * (1/intensity))})
-    #     logger.debug(saturationR)
-    #     time.sleep(0.0166)
-    
+    box.run()
