@@ -22,7 +22,7 @@ class Sandbox(MQTTModule):
 
     def loop(self) -> None:
         autonTriggered = False
-        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 255]})
         while True:
             if self.enabled:
                 if autonTriggered == False:
@@ -43,7 +43,7 @@ class Sandbox(MQTTModule):
             else:
                 if autonTriggered == True:
                     autonTriggered = False
-                    box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 255, 0, 0]})
+                    box.send_message("avr/pcm/set_base_color", {"wrgb": [100, 0, 255, 255]})
             time.sleep(0.5)
 
 if __name__ == "__main__":
